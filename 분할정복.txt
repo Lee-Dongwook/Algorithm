@@ -1,0 +1,30 @@
+분할정복 알고리즘은 주어진 문제를 둘 이상의 부분문제로 나눈 뒤 각 문제에 
+대한 답을 계산하고, 이를 병합하여 문제를 해결하는 알고리즘이다.
+
+ex1) 수열의 합 : 1부터 n까지의 합 구하기
+
+
+=> 1+2+3+4+..+N
+=> (1+2+3+4+..+N/2) + {(N/2+1) + (N/2+2) + (N/2+3) + .. + (N/2 + N/2)}
+
+#include <iostream>
+using namespace std;
+
+int fastsum(int x)
+{
+    if(x == 1)
+    return x;
+    else{
+        if(x % 2 == 0)
+        {
+            return fastsum((x/2)*2 + (x/2) * (x/2));
+        }
+        else{
+            return fastsum((x-1)/2) * 2 + ((x-1)/2) * ((x-1)/2) + x;
+        }
+    }
+}
+
+
+ex2) merge sort
+
