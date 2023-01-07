@@ -1,39 +1,32 @@
 #include <iostream>
-#define MAX 10000
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-void merge(int left, int right)
+void merge_sort(vector<int>& data, int left, int right)
 {
-    int sorted[MAX];
-    int arr[MAX];
-    int mid = (left+right) / 2;
+    if(left>=right)return;
+    
+       int mid = (left + right)/2;
+       merge_sort(data,left, mid);
+       merge_sort(data,mid+1,right);
+      
+    vector<int> temp(right-left+1);
+    int i= left, j = mid +1;
 
-    int i = left, j= mid + 1, k = left;
-    while(i <= mid && j <= right)
+    for(int k=0;k<temp.size();k++)
     {
-        sorted[k++] = (arr[i] <= arr[j]) ? arr[i++] : arr[j++];
+        if(i<=mid && j<=right)
+        {
+            temp[k] = data[i]<=data[j] ? data[i++]:data[j++];
 
+        }
+        else{
+            temp[k] = i <= mid ? data[i++] : data[j++];
+        }
     }
-    int tmp = (i>mid)? j : i;
-    while (k<=right)
+    for(int k = 0; k<temp.size(); k++)
     {
-        sorted[k++] = arr[tmp++];
-    }
-
-    for(int i = left; i <= right; i++)
-    {
-        arr[i] = sorted[i];
-    }
-}
-
-void merge_sort(int left, int right)
-{
-    int mid;
-    if(left<right)
-    {
-        mid = (left + right)/2;
-        merge_sort(left, mid);
-        merge_sort(mid+1,right);
-        merge(left,right);
+        data[left++] = temp[k];
     }
 }
