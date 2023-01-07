@@ -1,0 +1,95 @@
+2개의 포인터를 사용하여 구간의 길이를 가변적으로 잡아가며 
+특정 조건을 만족하는 구간을 찾는 알고리즘
+
+1. 포인터 2개가 같은 방향으로 진행하는 것
+2. 포인터 2개가 양끝에서 시작하여 반대 방향으로 진행하는 것
+3. 포인터 하나는 한쪽 방향으로만 진행하고, 다른 포인터는 양쪽으로 이동하는 것
+
+
+1. 포인터 2개가 같은 방향으로 진행하는 경우
+
+백준 2003번
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int answer = 0;
+int main() {
+    int N, M;
+
+    cin >> N >> M;
+    vector<int> arr(N);
+    for (int i = 0; i < N; ++i)
+        cin >> arr[i];
+
+    int start = 0;
+    int end = 0;
+    int sum = arr[0];
+    while (end < N) {       
+        if (sum < M) { // sum 이 더 커져야 하는 상황. 즉 end 포인터가 더 오른쪽으로 가야 한다.
+            end++;
+            if (end < N)
+                sum += arr[end];
+        }
+        else if (sum > M) { // sum 이 더 작아져야 하는 상황. 즉 start 포인터가 더 오른쪽으로 가야 한다.
+            sum -= arr[start];
+            start++;
+        }
+        else if (sum == M) { // sum 이 M 과 같아졌으므로 현재의 star, end 로는 이 다음부터는 [start, end + 1] 도, [start + 1, end] 도 답이 될 수 없다. 두 포인터 다 더 오른쪽으로 한 칸씩 이동시킨다. 
+            sum -= arr[start];
+            start++;   
+            end++;
+            if (end < N)
+                sum += arr[end];
+            answer++;
+        }
+    }
+
+    cout << answer;
+}
+
+
+2. 포인터 2개가 양 끝에서 반대 방향으로 진행하는 경우
+
+백준 2470번 두 용액
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#define INF 2000000000
+using namespace std;
+
+vector<int> answer(2);
+int main() {
+    int N;
+    cin >> N;
+    vector<int> arr(N);
+    for (int i = 0; i < N; ++i)
+        cin >> arr[i];
+    sort(arr.begin(), arr.end()); // 정렬 필수!
+
+    int start = 0; // start 은 왼쪽 끝에서
+    int end = N - 1; // end 은 오른쪽 끝에서 시작
+    int min = INF; // 현재까지 0 에 가장 가까웠던 합
+    while (start < end) {
+        int sum = arr[start] + arr[end];
+
+        if (min > abs(sum)) {
+            min = abs(sum);
+            answer[0] = arr[start];
+            answer[1] = arr[end]; 
+
+            if (sum == 0)
+                break;
+        }
+
+        if (sum < 0) 
+            start++;
+        else 
+            end--;
+    }
+
+    cout << answer[0] << " " << answer[1];
+}
+
