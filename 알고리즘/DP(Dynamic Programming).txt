@@ -1,0 +1,22 @@
+하나의 문제는 단 한번만 풀도록 매번 저장하는 알고리즘
+여러개의 하위 문제들로 나누어 문제들을 처리
+
+1. 점화식을 세울 수 있어야 한다
+2. 큰 문제들이 작은 문제들로 나눠 질 때 그 관계 사이에서 사이클이 발생해서는 안된다.
+
+ex) 피보나치 DP
+
+#include <iostream>
+#include <vector>
+
+vector<int> dp;
+
+int solution(int x)
+{
+    if(x== 0) return 0;
+    if(x== 1) return 1;
+    if(x == 2) return 1;
+    if(dp[x] != -1) return dp[x];
+    dp[x] = solution(x-1) + solution(x-2);
+    return dp[x];
+}

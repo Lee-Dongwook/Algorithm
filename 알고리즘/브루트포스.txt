@@ -1,0 +1,53 @@
+Brute(난폭한) + Force(힘)
+모든 경우의 수를 탐색하여 요구조건에 충족되는 결과만을 가져오는 것
+
+모든 영역 전체를 탐색하는 방법
+
+깊이우선 (DFS) 너비우선 (BFS) 순차탐색 등을 사용한다.
+
+ex) 백준 2798번 블랙잭
+
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+#define Max 101
+
+int BLJ[Max];
+
+int blackjack(int N, int M)
+{
+    int sub = 100000;
+    int sum = 0;
+    for (int i = 0; i < N - 2; i++)
+    {
+        for (int j = i+1; j < N - 1; j++)
+        {
+            for (int k = j+ 1; k < N; k++)
+            {
+                if (sub > M - (BLJ[i] + BLJ[j] + BLJ[k])&& M - (BLJ[i] + BLJ[j] + BLJ[k]) >= 0 )
+                {
+                    sub = M - (BLJ[i] + BLJ[j] + BLJ[k]);
+                    sum = BLJ[i] + BLJ[j] + BLJ[k];
+                }               
+            }
+        }
+    }
+    return sum;
+}
+
+int main()
+{
+    int N, M;
+    int Card;
+    cin >> N >> M;
+    for(int i = 0; i < N; i++)
+    {
+        cin >> Card;
+        BLJ[i] = Card;
+    }
+
+
+    cout << blackjack(N,M);
+}
