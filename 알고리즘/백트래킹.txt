@@ -1,0 +1,38 @@
+모든 가능한 경우의 수를 탐색하는 알고리즘
+
+트리 자료구조에서 그래프 탐색의 변형된 모습
+
+대부분 깊이 우선 탐색의 형태
+
+유망하지 않다고 판단되는 노드 (non-promising) 는 배제된다.
+
+특정한 집합에서 어떤 기준을 만족하는 원소들의 순서를 선택하는 알고리즘
+
+상태 공간 트리(State Space Tree)
+: 백트래킹이 갖는 트리구조로 해답을 탐색하기 위한 탐색 공간
+
+
+void backtracking(int index)
+{
+    if(index == n)
+    {
+        return;
+    }
+    if(isPromising())
+    {
+        visited[index] = true;
+        bactracking(index+1);
+        visited[index] = false;
+    }
+}
+
+bool isPromising(int index)
+{
+    if(non-promising)
+    return false;
+    if(promising)
+    return true;
+}
+
+백트래킹은 보통 재귀로 구현한다.
+
